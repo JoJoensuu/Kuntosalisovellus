@@ -1,0 +1,9 @@
+{{ gym }}
+<ul>
+    <hr>
+    {% for review in reviews %}
+    <li> {{ review.stars }} | {{ review.comment }} </li>
+    {% endfor %}
+</ul>
+<hr>
+<a href="/">Return</a>
