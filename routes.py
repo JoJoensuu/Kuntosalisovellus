@@ -1,11 +1,12 @@
 
 from app import app
 from flask import render_template, request, redirect
-import users
+import users, gyms
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    list = gyms.get_list()
+    return render_template("index.html", count=len(list), gyms=list)
 
 @app.route("/new")
 def new():

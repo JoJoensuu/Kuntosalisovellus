@@ -1,4 +1,13 @@
 {% if session.user_id %}
+Number of gyms listed: {{ count }}
+<hr>
+{% for gym in gyms %}
+<i>Gym name:</i> {{ gym.name }}<br>
+<i>Address:</i> {{ gym.address }}<br>
+<i>Monthly price:</i> {{ gym.fee }}<br>
+<i>Description:</i> {{ gym.description }}
+<hr>
+{% endfor %}
 Olet kirjautunut sisään.
 <a href="/logout">Kirjaudu ulos</a>
 {% else %}
