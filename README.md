@@ -2,7 +2,7 @@
 
 Sovelluksessa näkyy alueen kuntosalit, joista voi etsiä tietoa ja lukea kävijöiden arviot. Jokainen käyttäjä on peruskäyttäjä tai ylläpitäjä.
 
-- Käyttäjä voi kirjautua sisään ja ulos sekä luoda uuden tunnuksen. | Kirjautuminen onnistuu, tunnuksen luominen kesken
+- Käyttäjä voi kirjautua sisään ja ulos sekä luoda uuden tunnuksen. | Kirjautuminen onnistuu ja tunnuksen luominen toimivat.
 - Käyttäjä näkee kuntosalit kartalla ja voi painaa kuntosalista, jolloin siitä näytetään lisää tietoa (kuten hinta, kuvaus, laitteet ja aukioloajat).
 - Käyttäjä voi antaa arvion (tähdet ja kommentti) kuntosalista ja lukea muiden antamia arvioita.
 - Ylläpitäjä voi lisätä ja poistaa kuntosaleja sekä määrittää kuntosalista näytettävät tiedot.
