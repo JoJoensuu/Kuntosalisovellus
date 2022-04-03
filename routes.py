@@ -1,4 +1,3 @@
-
 from app import app
 from flask import render_template, request, redirect
 import users, gyms, reviews
@@ -18,7 +17,7 @@ def login():
         if users.login(username, password):
             return redirect("/")
         else:
-            return render_template("error.html", message="Väärä tunnus tai salasana")
+            return render_template("error.html", message="Wrong username or password")
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -29,11 +28,11 @@ def register():
         password1 = request.form["password1"]
         password2 = request.form["password2"]
         if password1 != password2:
-            return render_template("error.html", message="Salasanat eroavat")
+            return render_template("error.html", message="Passwords don't match")
         if users.register(username, password1):
             return redirect("/")
         else:
-            return render_template("error.html", message="Rekisteröinti ei onnistunut")
+            return render_template("error.html", message="Failed to register user")
 
 
 @app.route("/logout")

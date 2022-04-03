@@ -9,8 +9,8 @@ Number of gyms listed: {{ count }}
 <a href="/new_review/{{ gym.id }}">Write a review</a>
 <hr>
 {% endfor %}
-Olet kirjautunut sisään.
-<a href="/logout">Kirjaudu ulos</a>
+You are signed in.
+<a href="/logout">Logout</a>
 {% else %}
-<a href="/login">Kirjaudu sisään</a>
+<a href="/login">Login</a>
 {% endif %}
