@@ -10,3 +10,11 @@ Sovelluksessa näkyy alueen kuntosalit, joista voi etsiä tietoa ja lukea kävij
 - Ylläpitäjä voi tarvittaessa poistaa käyttäjän antaman arvion.
 - Ylläpitäjä voi luoda ryhmiä, joihin kuntosaleja voi luokitella. Kuntosali voi kuulua yhteen tai useampaan ryhmään.
 - Käyttäjä näkee myös listan, jossa kuntosalit on järjestetty halvimmasta kalleimpaan kuukausihinnan mukaisesti.
+
+Sovelluksen ominaisuudet 4.3.:
+- Käyttäjä voi kirjautua sisään ja ulos, sekä luoda uuden käyttäjätunnuksen.
+- Kirjautunut käyttäjä näkee etusivulla listan kuntosaleista, sekä niiden tiedoista.
+- Kirjautunut käyttäjä voi kirjoittaa arvion kuntosalista, sekä antaa sille 1-5 tähteä.
+
+Sovelluksen testaaminen Herokussa:
+https://kuntosalisovellus.herokuapp.com/
