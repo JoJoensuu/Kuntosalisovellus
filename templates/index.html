@@ -5,7 +5,8 @@ Number of gyms listed: {{ count }}
 <i>Gym name:</i> {{ gym.name }}<br>
 <i>Address:</i> {{ gym.address }}<br>
 <i>Monthly price:</i> {{ gym.fee }}<br>
-<i>Description:</i> {{ gym.description }}
+<i>Description:</i> {{ gym.description }}<br>
+<a href="/new_review/{{ gym.id }}">Write a review</a>
 <hr>
 {% endfor %}
 Olet kirjautunut sisään.

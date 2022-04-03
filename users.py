@@ -28,3 +28,6 @@ def register(username, password):
 
 def logout():
     del session["user_id"]
+
+def user_id():
+    return session.get("user_id",0)

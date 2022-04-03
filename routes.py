@@ -1,16 +1,12 @@
 
 from app import app
 from flask import render_template, request, redirect
-import users, gyms
+import users, gyms, reviews
 
 @app.route("/")
 def index():
     list = gyms.get_list()
     return render_template("index.html", count=len(list), gyms=list)
-
-@app.route("/new")
-def new():
-    return render_template("new.html")
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -44,3 +40,18 @@ def register():
 def logout():
     users.logout()
     return redirect("/")
+
+@app.route("/new_review/<int:id>")
+def new_review(id):
+    return render_template("new.html", id=id)
+
+@app.route("/submit_review", methods=["POST"])
+def submit_review():
+    gym_id = request.form["id"]
+    if "content" in request.form:
+        stars = request.form["stars"]
+        content = request.form["content"]
+        if reviews.submit(gym_id, stars, content):
+            return redirect("/")
+        else:
+            return render_template("error.html", message="Submitting the review failed")
