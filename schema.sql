@@ -19,3 +19,26 @@ CREATE TABLE reviews (
 	stars INTEGER,
 	comment TEXT
 );
+INSERT INTO gyms (
+	name,
+	address,
+	fee,
+	description)
+	VALUES (
+	'Superstar Gym',
+	'Superstar Street',
+	80,
+	'We will make you into a superstar!'
+);
+
+INSERT INTO gyms (
+	name,
+	address,
+	fee,
+	description)
+	VALUES (
+	'Average Gym',
+	'Average Street',
+	20,
+	'For the Average Joe'
+);
