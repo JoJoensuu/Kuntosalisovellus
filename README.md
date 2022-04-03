@@ -4,7 +4,7 @@ Sovelluksessa näkyy alueen kuntosalit, joista voi etsiä tietoa ja lukea kävij
 
 - Käyttäjä voi kirjautua sisään ja ulos sekä luoda uuden tunnuksen. | Kirjautuminen onnistuu ja tunnuksen luominen toimivat.
 - Käyttäjä näkee listan kuntosaleista ja voi painaa kuntosalista, jolloin siitä näytetään lisää tietoa (kuten hinta, kuvaus, laitteet ja aukioloajat). | Lista kuntosaleista näytetään nyt etusivulla.
-- Käyttäjä voi antaa arvion (tähdet ja kommentti) kuntosalista ja lukea muiden antamia arvioita.
+- Käyttäjä voi antaa arvion (tähdet ja kommentti) kuntosalista ja lukea muiden antamia arvioita. | Arvioiden kirjoittaminen ja tallentaminen toimii.
 - Ylläpitäjä voi lisätä ja poistaa kuntosaleja sekä määrittää kuntosalista näytettävät tiedot.
 - Käyttäjä voi etsiä kaikki kuntosalit, joiden kuvauksessa on annettu sana tai joissa on tietty laite.
 - Ylläpitäjä voi tarvittaessa poistaa käyttäjän antaman arvion.
