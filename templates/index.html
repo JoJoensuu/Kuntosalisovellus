@@ -1,12 +1,6 @@
-{% if session.username %} 
-<p>You have signed in as {{ session.username }}</p>
-<a href="/logout">Logout</a>
+{% if session.user_id %}
+Olet kirjautunut sisään.
+<a href="/logout">Kirjaudu ulos</a>
 {% else %}
-<form action="/login" method="POST">
-    <p>Username:<br>
-        <input type="text" name="username"></p>
-    <p>Password:<br>
-    <input type="password" name="password"></p>
-    <input type="submit" value="Login">
-</form>
+<a href="/login">Kirjaudu sisään</a>
 {% endif %}
