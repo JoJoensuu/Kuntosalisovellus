@@ -8,7 +8,8 @@ CREATE TABLE gyms (
 CREATE TABLE users (
 	id SERIAL PRIMARY KEY,
 	username TEXT,
-	password TEXT
+	password TEXT,
+	admin BOOLEAN
 );
 CREATE TABLE reviews (
 	id SERIAL PRIMARY KEY,
