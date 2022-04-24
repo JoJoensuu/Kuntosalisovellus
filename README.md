@@ -22,3 +22,5 @@ Sovelluksen ominaisuudet 24.4.:
 
 Sovelluksen testaaminen Herokussa:
 https://kuntosalisovellus.herokuapp.com/
+
+Kirjautuminen ylläpitäjänä: admin:12345
