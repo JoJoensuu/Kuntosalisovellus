@@ -17,6 +17,7 @@ def login(username, password):
             return False
 
 def register(username, password):
+    
     hash_value = generate_password_hash(password)
     try:
         sql = "INSERT INTO users (username,password) VALUES (:username,:password)"
@@ -31,3 +32,12 @@ def logout():
 
 def user_id():
     return session.get("user_id",0)
+
+def username_taken(username):
+    sql = "SELECT * FROM users WHERE username=:username"
+    result = db.session.execute(sql, {"username":username})
+    user = result.fetchall()
+    if len(user) != 0:
+        return True
+    else:
+        return False
