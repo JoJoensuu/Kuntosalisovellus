@@ -1,0 +1,14 @@
+{% if session.admin %}
+Number of users: {{ count }}
+<hr>
+{% for user in users %}
+<i>Id:</i> {{ user.id }}<br>
+<i>Username:</i> {{ user.username }}<br>
+<i>Admin rights:</i> {{ user.admin }}<br>
+<a href="/remove_user/{{ user.id }}">Delete user</a><br>
+<hr>
+{% endfor %}
+<a href="/">Return</a>
+{% else %}
+Error: no admin Rights
+{% endif %}

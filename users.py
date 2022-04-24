@@ -48,3 +48,17 @@ def username_taken(username):
         return True
     else:
         return False
+
+def get_list():
+    sql = "SELECT * FROM users"
+    result = db.session.execute(sql)
+    return result.fetchall()
+
+def delete_user(id):
+    try:
+        sql = "DELETE FROM users WHERE id=:id"
+        result = db.session.execute(sql, {"id":id})
+        db.session.commit()
+        return True
+    except:
+        return False

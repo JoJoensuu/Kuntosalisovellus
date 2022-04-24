@@ -15,7 +15,7 @@ CREATE TABLE users (
 CREATE TABLE reviews (
 	id SERIAL PRIMARY KEY,
 	posted_at TIMESTAMP,
-	user_id INTEGER REFERENCES users,
+	user_id INTEGER REFERENCES users ON DELETE CASCADE,
 	gym_id INTEGER REFERENCES gyms,
 	stars INTEGER,
 	comment TEXT

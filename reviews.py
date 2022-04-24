@@ -11,7 +11,16 @@ def submit(id, stars, content):
     list = result.fetchall()
     if len(list) != 0:
         return False
-    sql = "INSERT INTO reviews (posted_at, user_id, gym_id, stars, content) VALUES (NOW(), :user_id, :id, :stars, :content)"
-    db.session.execute(sql, {"user_id":user_id, "id":id, "stars":stars, "content":content,})
+    sql = "INSERT INTO reviews (posted_at, user_id, gym_id, stars, comment) VALUES (NOW(), :user_id, :id, :stars, :comment)"
+    db.session.execute(sql, {"user_id":user_id, "id":id, "stars":stars, "comment":content,})
     db.session.commit()    
     return True
+
+def delete_review(id):
+    try:
+        sql = "DELETE FROM reviews WHERE id=:id"
+        result = db.session.execute(sql, {"id":id})
+        db.session.commit()
+        return True
+    except:
+        return False

@@ -7,6 +7,11 @@ def index():
     list = gyms.get_list()
     return render_template("index.html", count=len(list), gyms=list)
 
+@app.route("/show_users")
+def show_users():
+    list = users.get_list()
+    return render_template("users.html", count=len(list), users=list)
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "GET":
@@ -35,7 +40,6 @@ def register():
             return redirect("/")
         else:
             return render_template("error.html", message="Failed to register user")
-
 
 @app.route("/logout")
 def logout():
@@ -84,3 +88,17 @@ def delete_gym(id):
         return redirect("/")
     else:
         return render_template("error.html", message="Gym deletion failed")
+
+@app.route("/remove_user/<int:id>")
+def remove_user(id):
+    if users.delete_user(id):
+        return redirect("/show_users")
+    else:
+        return render_template("error.html", message="User deletion failed")
+
+@app.route("/remove_review/<int:id>")
+def remove_review(id):
+    if reviews.delete_review(id):
+        return redirect("/")
+    else:
+        return render_template("error.html", message="Review deletion failed")

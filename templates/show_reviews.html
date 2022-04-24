@@ -3,7 +3,10 @@ Number of reviews: {{ count }}
 <hr>
 {% for review in reviews %}
 <i>Stars:</i> {{ review.stars }}<br>
-<i>Comment:</i> {{ review.content }}<br>
+<i>Comment:</i> {{ review.comment }}<br>
+{% if session.admin %}
+<a href="/remove_review/{{ review.id }}">Delete review</a><br>
+{% endif %}
 <hr>
 {% endfor %}
 <a href="/">Return</a>
