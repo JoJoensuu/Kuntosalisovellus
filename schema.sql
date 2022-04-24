@@ -3,7 +3,8 @@ CREATE TABLE gyms (
 	name TEXT,
 	address TEXT,
 	fee INTEGER,
-	description TEXT
+	description TEXT,
+	visible BOOLEAN
 );
 CREATE TABLE users (
 	id SERIAL PRIMARY KEY,
