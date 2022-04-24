@@ -1,3 +1,4 @@
+{% if session.user_id %}
 <html>
     <form action="/submit_review" method="POST">
         Stars:<br>
@@ -15,3 +16,6 @@
     <br>
     <a href="/">Return without submitting</a>
 </html>
+{% else %}
+Error: not logged in.
+{% endif %}

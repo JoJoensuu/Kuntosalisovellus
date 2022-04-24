@@ -1,5 +1,6 @@
+{% if session.user_id %}
 <html>
-    <form action="/write_review" method="POST">
+    <form action="/submit_review" method="POST">
         Stars:<br>
         <input type="radio" name="stars" value="1"> 1 star
         <input type="radio" name="stars" value="2"> 2 stars
@@ -8,10 +9,13 @@
         <input type="radio" name="stars" value="5"> 5 stars
         <br>
         Review:<br>
-        <textarea name="review" rows="3" cols="50"></textarea><br>
+        <textarea name="content" rows="3" cols="50"></textarea><br>
         <input type="submit" value="Submit review">
         <input type="hidden" name="id" value="{{ id }}">
     </form>
     <br>
     <a href="/">Return without submitting</a>
 </html>
+{% else %}
+Error: not logged in.
+{% endif %}

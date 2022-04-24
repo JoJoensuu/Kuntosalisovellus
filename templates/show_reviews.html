@@ -1,9 +1,12 @@
-{{ gym }}
-<ul>
-    <hr>
-    {% for review in reviews %}
-    <li> {{ review.stars }} | {{ review.comment }} </li>
-    {% endfor %}
-</ul>
+{% if session.user_id %}
+Number of reviews: {{ count }}
 <hr>
+{% for review in reviews %}
+<i>Stars:</i> {{ review.stars }}<br>
+<i>Comment:</i> {{ review.content }}<br>
+<hr>
+{% endfor %}
 <a href="/">Return</a>
+{% else %}
+Error: not logged in.
+{% endif %}

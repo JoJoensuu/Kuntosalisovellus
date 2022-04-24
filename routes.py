@@ -54,3 +54,8 @@ def submit_review():
             return redirect("/")
         else:
             return render_template("error.html", message="Submitting the review failed")
+
+@app.route("/show_reviews/<int:id>")
+def show_reviews(id):
+    list = gyms.get_reviews(id)
+    return render_template("show_reviews.html", count=len(list), reviews=list)
