@@ -6,6 +6,11 @@ def submit(id, stars, content):
     user_id = users.user_id()
     if user_id == 0:
         return False
+    sql = "SELECT * FROM reviews WHERE user_id=:userid AND gym_id=:id"
+    result = db.session.execute(sql, {"userid":user_id, "id":id})
+    list = result.fetchall()
+    if len(list) != 0:
+        return False
     sql = "INSERT INTO reviews (posted_at, user_id, gym_id, stars, content) VALUES (NOW(), :user_id, :id, :stars, :content)"
     db.session.execute(sql, {"user_id":user_id, "id":id, "stars":stars, "content":content,})
     db.session.commit()    
