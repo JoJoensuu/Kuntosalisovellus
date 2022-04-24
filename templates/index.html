@@ -6,15 +6,7 @@
 Number of gyms listed: {{ count }}
 <hr>
 {% for gym in gyms %}
-<i>Gym name:</i> {{ gym.name }}<br>
-<i>Address:</i> {{ gym.address }}<br>
-<i>Monthly price:</i> {{ gym.fee }}<br>
-<i>Description:</i> {{ gym.description }}<br>
-<a href="/new_review/{{ gym.id }}">Write a review</a><br>
-<a href="/show_reviews/{{ gym.id }}">Show reviews of {{ gym.name }}</a><br>
-{% if session.admin %}
-<a href="/delete_gym/{{ gym.id }}">Delete {{ gym.name }}</a><br>
-{% endif %}
+<a href="/gym_info/{{ gym.id }}">{{ gym.name }}</a>
 <hr>
 {% endfor %}
 You are signed in.

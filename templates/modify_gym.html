@@ -1,0 +1,15 @@
+{% if session.admin %}
+<html>
+    <form action="/save_changes" method="POST">
+        ID:{{ gym.id }}
+        Name:<textarea name="gymname" placeholder="{{ gym.name }}" rows="1" cols="30"></textarea><br>
+        Address:<textarea name="gymaddress" placeholder="{{ gym.address }}" rows="1" cols="30"></textarea><br>
+        Fee:<textarea name="gymfee" placeholder="{{ gym.fee }}" rows="1" cols="10"></textarea><br>
+        Description:<textarea name="gymdescription" placeholder="{{ gym.description }}" rows="3" cols="50"></textarea>
+        <input type="submit" value="Save changes">
+        <input type="hidden" name="id" value="{{ id }}">
+    </form>
+    <br>
+    <a href="/gym_info/{{ gym.id }}">Return without submitting</a>
+</html>
+{% endif %}

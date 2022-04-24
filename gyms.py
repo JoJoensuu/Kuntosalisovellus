@@ -33,3 +33,20 @@ def delete_gym(id):
         return True
     except:
         return False
+
+def get_info(id):
+    sql = "SELECT * FROM gyms WHERE id=:id"
+    result = db.session.execute(sql, {"id":id})
+    return result.fetchone()
+
+def alter(id, name, address, fee, description):
+    admin = users.admin()
+    if not admin:
+        return False
+    try:
+        sql = "UPDATE gyms SET name=:name, address=:address, fee=:fee, description=:description WHERE id=:id"
+        db.session.execute(sql, {"name":name, "address":address, "fee":fee, "description":description, "id":id})
+        db.session.commit()
+        return True
+    except:
+        return False

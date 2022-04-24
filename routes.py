@@ -102,3 +102,25 @@ def remove_review(id):
         return redirect("/")
     else:
         return render_template("error.html", message="Review deletion failed")
+
+@app.route("/gym_info/<int:id>")
+def gym_info(id):
+    info = gyms.get_info(id)
+    return render_template("gym_info.html", gym=info)
+
+@app.route("/modify_gym/<int:id>")
+def modify_gym(id):
+    info = gyms.get_info(id)
+    return render_template("modify_gym.html", id=id, gym=info)
+
+@app.route("/save_changes", methods=["POST"])
+def save_changes():
+    gym_id = request.form["id"]
+    name = request.form["gymname"]
+    address = request.form["gymaddress"]
+    fee = request.form["gymfee"]
+    description = request.form["gymdescription"]
+    if gyms.alter(gym_id, name, address, fee, description):
+        return redirect("/")
+    else:
+        return render_template("error.html", message="Modifying gym info failed")

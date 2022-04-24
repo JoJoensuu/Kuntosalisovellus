@@ -1,0 +1,17 @@
+{% if session.user_id %}
+<hr>
+<i>Gym name:</i> {{ gym.name }}<br>
+<i>Address:</i> {{ gym.address }}<br>
+<i>Monthly price:</i> {{ gym.fee }}<br>
+<i>Description:</i> {{ gym.description }}<br>
+<a href="/new_review/{{ gym.id }}">Write a review</a><br>
+<a href="/show_reviews/{{ gym.id }}">Show reviews of {{ gym.name }}</a><br>
+{% if session.admin %}
+<a href="/modify_gym/{{ gym.id }}">Modify {{ gym.name }}</a><br>
+<a href="/delete_gym/{{ gym.id }}">Delete {{ gym.name }}</a><br>
+{% endif %}
+<hr>
+<a href="/">Return</a>
+{% else %}
+Error: not logged in.
+{% endif %}
