@@ -4,7 +4,7 @@ from flask import session
 from werkzeug.security import check_password_hash, generate_password_hash
 
 def login(username, password):
-    sql = "SELECT id, password FROM users WHERE username=:username"
+    sql = "SELECT id, password, admin FROM users WHERE username=:username"
     result = db.session.execute(sql, {"username":username})
     user = result.fetchone()
     if not user:
@@ -32,9 +32,13 @@ def register(username, password):
 
 def logout():
     del session["user_id"]
+    del session["admin"]
 
 def user_id():
     return session.get("user_id",0)
+
+def admin():
+    return session.get("admin")
 
 def username_taken(username):
     sql = "SELECT * FROM users WHERE username=:username"

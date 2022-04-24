@@ -1,0 +1,13 @@
+{% if session.admin %}
+<html>
+    <form action="/add_gym" method="POST">
+        Name:<textarea name="gymname" rows="1" cols="30"></textarea><br>
+        Address:<textarea name="gymaddress" rows="1" cols="30"></textarea><br>
+        Fee:<textarea name="gymfee" rows="1" cols="10"></textarea><br>
+        Description:<textarea name="gymdescription" rows="3" cols="50"></textarea>
+        <input type="submit" value="Add gym">
+    </form>
+    <br>
+    <a href="/">Return without submitting</a>
+</html>
+{% endif %}

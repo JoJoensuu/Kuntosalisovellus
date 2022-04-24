@@ -61,3 +61,19 @@ def submit_review():
 def show_reviews(id):
     list = gyms.get_reviews(id)
     return render_template("show_reviews.html", count=len(list), reviews=list)
+
+@app.route("/new_gym")
+def new_gym():
+    return render_template("new_gym.html")
+
+@app.route("/add_gym", methods=["POST"])
+def add_gym():
+    if "gymname" in request.form and "gymaddress" in request.form and "gymfee" in request.form and "gymdescription" in request.form:
+        name = request.form["gymname"]
+        address = request.form["gymaddress"]
+        fee = request.form["gymfee"]
+        description = request.form["gymdescription"]
+        if gyms.submit(name, address, fee, description):
+            return redirect("/")
+        else:
+            return render_template("error.html", message="Submitting new gym failed")

@@ -1,3 +1,6 @@
+{% if session.admin %}
+<a href="/new_gym">[ADMIN] Add new gym</a>
+{% endif %}
 {% if session.user_id %}
 Number of gyms listed: {{ count }}
 <hr>
