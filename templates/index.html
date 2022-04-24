@@ -1,5 +1,5 @@
 {% if session.admin %}
-<a href="/new_gym">[ADMIN] Add new gym</a>
+[ADMIN] <a href="/new_gym">Add new gym</a><br>
 {% endif %}
 {% if session.user_id %}
 Number of gyms listed: {{ count }}
@@ -10,7 +10,10 @@ Number of gyms listed: {{ count }}
 <i>Monthly price:</i> {{ gym.fee }}<br>
 <i>Description:</i> {{ gym.description }}<br>
 <a href="/new_review/{{ gym.id }}">Write a review</a><br>
-<a href="/show_reviews/{{ gym.id }}">Show reviews of {{ gym.name }}</a>
+<a href="/show_reviews/{{ gym.id }}">Show reviews of {{ gym.name }}</a><br>
+{% if session.admin %}
+<a href="/delete_gym/{{ gym.id }}">Delete {{ gym.name }}</a><br>
+{% endif %}
 <hr>
 {% endfor %}
 You are signed in.

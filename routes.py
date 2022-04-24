@@ -77,3 +77,10 @@ def add_gym():
             return redirect("/")
         else:
             return render_template("error.html", message="Submitting new gym failed")
+
+@app.route("/delete_gym/<int:id>")
+def delete_gym(id):
+    if gyms.delete_gym(id):
+        return redirect("/")
+    else:
+        return render_template("error.html", message="Gym deletion failed")
