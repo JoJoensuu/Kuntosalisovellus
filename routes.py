@@ -33,6 +33,10 @@ def register():
         username = request.form["username"]
         password1 = request.form["password1"]
         password2 = request.form["password2"]
+        if not username:
+            return render_template("error.html", message="No username given")
+        if not password1:
+            return render_template("error.html", message="Password cannot be empty")
         if users.username_taken(username):
             return render_template("error.html", message="Username taken")
         if password1 != password2:
