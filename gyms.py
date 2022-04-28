@@ -6,6 +6,11 @@ def get_list():
     result = db.session.execute(sql)
     return result.fetchall()
 
+def get_sum():
+    sql = "SELECT COUNT(*) FROM gyms WHERE visible=TRUE or visible IS NULL"
+    result = db.session.execute(sql)
+    return result.fetchone()
+
 def get_reviews(id):
     sql = "SELECT * FROM reviews WHERE gym_id=:id"
     result = db.session.execute(sql, {"id":id})

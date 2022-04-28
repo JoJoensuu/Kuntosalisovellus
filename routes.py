@@ -5,7 +5,8 @@ import users, gyms, reviews
 @app.route("/")
 def index():
     list = gyms.get_list()
-    return render_template("index.html", count=len(list), gyms=list)
+    sum = gyms.get_sum()
+    return render_template("index.html", count=sum[0], gyms=list)
 
 @app.route("/show_users")
 def show_users():
@@ -64,7 +65,8 @@ def submit_review():
 @app.route("/show_reviews/<int:id>")
 def show_reviews(id):
     list = gyms.get_reviews(id)
-    return render_template("show_reviews.html", count=len(list), reviews=list)
+    sum = reviews.get_sum(id)
+    return render_template("show_reviews.html", count=sum[0], reviews=list)
 
 @app.route("/new_gym")
 def new_gym():

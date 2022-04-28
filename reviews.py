@@ -24,3 +24,8 @@ def delete_review(id):
         return True
     except:
         return False
+
+def get_sum(id):
+    sql = "SELECT COUNT(reviews) FROM reviews LEFT JOIN gyms ON reviews.gym_id=gyms.id WHERE reviews.gym_id=:id"
+    result = db.session.execute(sql, {"id":id})
+    return result.fetchone()
