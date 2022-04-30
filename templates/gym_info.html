@@ -1,14 +1,15 @@
 {% if session.user_id %}
 <hr>
-<i>Gym name:</i> {{ gym.name }}<br>
-<i>Address:</i> {{ gym.address }}<br>
-<i>Monthly price:</i> {{ gym.fee }}<br>
-<i>Description:</i> {{ gym.description }}<br>
-<a href="/new_review/{{ gym.id }}">Write a review</a><br>
-<a href="/show_reviews/{{ gym.id }}">Show reviews of {{ gym.name }}</a><br>
+<i>Gym name:</i> {{ gym[0] }}<br>
+<i>Address:</i> {{ gym[1] }}<br>
+<i>Monthly price:</i> {{ gym[2] }}<br>
+<i>Description:</i> {{ gym[3] }}<br>
+<i>Gym type:</i> {{ gym[4] }}<br>
+<a href="/new_review/{{ gym[5] }}">Write a review</a><br>
+<a href="/show_reviews/{{ gym[5] }}">Show reviews of {{ gym[0] }}</a><br>
 {% if session.admin %}
-<a href="/modify_gym/{{ gym.id }}">Modify {{ gym.name }}</a><br>
-<a href="/delete_gym/{{ gym.id }}">Delete {{ gym.name }}</a><br>
+<a href="/modify_gym/{{ gym[5] }}">Modify {{ gym[0] }}</a><br>
+<a href="/delete_gym/{{ gym[5] }}">Delete {{ gym[0] }}</a><br>
 {% endif %}
 <hr>
 <a href="/">Return</a>

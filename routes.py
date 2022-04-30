@@ -127,7 +127,8 @@ def save_changes():
     address = request.form["gymaddress"]
     fee = request.form["gymfee"]
     description = request.form["gymdescription"]
-    if gyms.alter(gym_id, name, address, fee, description):
+    gym_type = request.form["gymtype"]
+    if gyms.alter(gym_id, name, address, fee, description, gym_type):
         return redirect("/")
     else:
         return render_template("error.html", message="Modifying gym info failed")

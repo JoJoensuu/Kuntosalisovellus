@@ -40,17 +40,17 @@ def delete_gym(id):
         return False
 
 def get_info(id):
-    sql = "SELECT * FROM gyms WHERE id=:id"
+    sql = "SELECT gyms.name, gyms.address, gyms.fee, gyms.description, gym_types.name, gyms.id FROM gyms LEFT JOIN gym_types ON gyms.type_id=gym_types.id WHERE gyms.id=:id"
     result = db.session.execute(sql, {"id":id})
     return result.fetchone()
 
-def alter(id, name, address, fee, description):
+def alter(id, name, address, fee, description, gym_type):
     admin = users.admin()
     if not admin:
         return False
     try:
-        sql = "UPDATE gyms SET name=:name, address=:address, fee=:fee, description=:description WHERE id=:id"
-        db.session.execute(sql, {"name":name, "address":address, "fee":fee, "description":description, "id":id})
+        sql = "UPDATE gyms SET name=:name, address=:address, fee=:fee, description=:description, type_id=:gym_type WHERE id=:id"
+        db.session.execute(sql, {"name":name, "address":address, "fee":fee, "description":description, "gym_type":gym_type, "id":id})
         db.session.commit()
         return True
     except:

@@ -1,15 +1,20 @@
 {% if session.admin %}
 <html>
     <form action="/save_changes" method="POST">
-        ID:{{ gym.id }}<br>
-        Name:<textarea name="gymname" rows="1" cols="30">{{ gym.name }}</textarea><br>
-        Address:<textarea name="gymaddress" rows="1" cols="30">{{ gym.address }}</textarea><br>
-        Fee:<textarea name="gymfee" rows="1" cols="10">{{ gym.fee }}</textarea><br>
-        Description:<textarea name="gymdescription" rows="3" cols="50">{{ gym.description }}</textarea>
+        ID:{{ gym[5] }}<br>
+        Name:<textarea name="gymname" rows="1" cols="30">{{ gym[0] }}</textarea><br>
+        Address:<textarea name="gymaddress" rows="1" cols="30">{{ gym[1] }}</textarea><br>
+        Fee:<textarea name="gymfee" rows="1" cols="10">{{ gym[2] }}</textarea><br>
+        Description:<textarea name="gymdescription" rows="3" cols="50">{{ gym[3] }}</textarea><br>
+        Type:<input type="radio" name="gymtype" value="1">Bodybuilding gym
+        <input type="radio" name="gymtype" value="2">Weightlifting gym
+        <input type="radio" name="gymtype" value="3">Crossfit gym
+        <input type="radio" name="gymtype" value="4">Powerlifting gym
+        <br><br>
         <input type="submit" value="Save changes">
         <input type="hidden" name="id" value="{{ id }}">
     </form>
     <br>
-    <a href="/gym_info/{{ gym.id }}">Return without submitting</a>
+    <a href="/gym_info/{{ gym[5] }}">Return without submitting</a>
 </html>
 {% endif %}
