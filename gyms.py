@@ -16,7 +16,7 @@ def get_reviews(id):
     result = db.session.execute(sql, {"id":id})
     return result.fetchall()
 
-def submit(name, address, fee, description):
+def submit(name, address, fee, description, type_id):
     admin = users.admin()
     if not admin:
         return False
@@ -25,8 +25,8 @@ def submit(name, address, fee, description):
     list = result.fetchall()
     if len(list) != 0:
         return False
-    sql = "INSERT INTO gyms (name, address, fee, description, visible) VALUES (:name, :address, :fee, :description, TRUE)"
-    db.session.execute(sql, {"name":name, "address":address, "fee":fee, "description":description})
+    sql = "INSERT INTO gyms (name, address, fee, description, visible, type_id) VALUES (:name, :address, :fee, :description, TRUE, :type_id)"
+    db.session.execute(sql, {"name":name, "address":address, "fee":fee, "description":description, "type_id":type_id})
     db.session.commit()
     return True
 

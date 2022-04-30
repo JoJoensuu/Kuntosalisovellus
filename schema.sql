@@ -25,26 +25,54 @@ CREATE TABLE gym_types (
 	id SERIAL PRIMARY KEY,
 	name TEXT,
 );
+INSERT INTO gym_types (
+	name)
+	VALUES (
+	'bodybuilding gym'
+);
+INSERT INTO gym_types (
+	name)
+	VALUES (
+	'weightlifting gym'
+);
+INSERT INTO gym_types (
+	name)
+	VALUES (
+	'powerlifting gym'
+);
+INSERT INTO gym_types (
+	name)
+	VALUES (
+	'crossfit gym'
+);
 INSERT INTO gyms (
 	name,
 	address,
 	fee,
-	description)
+	description,
+	visible
+	type_id)
 	VALUES (
 	'Superstar Gym',
 	'Superstar Street',
 	80,
-	'We will make you into a superstar!'
+	'We will make you into a superstar!',
+	True,
+	1
 );
 
 INSERT INTO gyms (
 	name,
 	address,
 	fee,
-	description)
+	description,
+	visible
+	type_id)
 	VALUES (
 	'Average Gym',
 	'Average Street',
 	20,
-	'For the Average Joe'
+	'For the Average Joe',
+	True,
+	1
 );

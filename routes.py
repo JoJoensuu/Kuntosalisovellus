@@ -78,12 +78,13 @@ def new_gym():
 
 @app.route("/add_gym", methods=["POST"])
 def add_gym():
-    if "gymname" in request.form and "gymaddress" in request.form and "gymfee" in request.form and "gymdescription" in request.form:
+    if "gymname" in request.form and "gymaddress" in request.form and "gymfee" in request.form and "gymdescription" in request.form and "gymtype" in request.form:
         name = request.form["gymname"]
         address = request.form["gymaddress"]
         fee = request.form["gymfee"]
         description = request.form["gymdescription"]
-        if gyms.submit(name, address, fee, description):
+        gym_type = request.form["gymtype"]
+        if gyms.submit(name, address, fee, description, gym_type):
             return redirect("/")
         else:
             return render_template("error.html", message="Submitting new gym failed")
