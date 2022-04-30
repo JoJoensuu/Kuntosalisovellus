@@ -1,16 +1,55 @@
-{% if session.admin %}
-[ADMIN] <a href="/new_gym">Add new gym</a><br>
-[ADMIN] <a href="/show_users">Show users</a><br>
-{% endif %}
-{% if session.user_id %}
-Number of gyms listed: {{ count }}
-<hr>
-{% for gym in gyms %}
-<a href="/gym_info/{{ gym.id }}">{{ gym.name }}</a>
-<hr>
-{% endfor %}
-You are signed in.
-<a href="/logout">Logout</a>
-{% else %}
-<a href="/login">Login</a>
-{% endif %}
+<!DOCTYPE html>
+<title>Gym app</title>
+<table width="100%" style="background-color: white;">
+    <tr>
+        <td align="center" width="600" style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: #000000; padding: 10px;">
+            {% if session.admin %}
+            <table width="600" style="background-color: #c2c2c2;">
+                <tr>
+                    <td style="border: 1px #000000 solid;">
+                        [ADMIN] <a href="/new_gym">Add new gym</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px #000000 solid;">
+                        [ADMIN] <a href="/show_users">Show users</a><br>
+                    </td>
+                </tr>
+            </table>
+            {% endif %}
+            {% if session.user_id %}
+            <table align="center" width="600" style="background-color: #df6060;">
+                <tr>
+                    <td align="center">
+                        <b>Number of gyms listed: {{ count }}</b>
+                    </td>
+                </tr>
+                <tr>
+                    {% for gym in gyms %}
+                    <td align="center" style="padding: 20px;">
+                        <a href="/gym_info/{{ gym.id }}" style="padding: 20px 0;">{{ gym.name }}</a><br>
+                    </td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <td align="center">
+                        You are signed in.
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center">
+                        <a href="/logout">Logout</a>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td align="center">
+                        <a href="/login">Login</a>
+
+                    </td>
+                </tr>
+            </table>
+            {% endif %}
+        </td>
+    </tr>
+</table>

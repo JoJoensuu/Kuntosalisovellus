@@ -4,7 +4,8 @@ CREATE TABLE gyms (
 	address TEXT,
 	fee INTEGER,
 	description TEXT,
-	visible BOOLEAN
+	visible BOOLEAN,
+	type_id INTEGER REFERENCES gym_types
 );
 CREATE TABLE users (
 	id SERIAL PRIMARY KEY,
@@ -19,6 +20,10 @@ CREATE TABLE reviews (
 	gym_id INTEGER REFERENCES gyms,
 	stars INTEGER,
 	comment TEXT
+);
+CREATE TABLE gym_types (
+	id SERIAL PRIMARY KEY,
+	name TEXT,
 );
 INSERT INTO gyms (
 	name,
