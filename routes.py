@@ -78,6 +78,8 @@ def new_gym():
 
 @app.route("/add_gym", methods=["POST"])
 def add_gym():
+    if users.get_token() != request.form["token"]:
+        return render_template("error.html", message="Invalid session token")
     if "gymname" in request.form and "gymaddress" in request.form and "gymfee" in request.form and "gymdescription" in request.form and "gymtype" in request.form:
         name = request.form["gymname"]
         address = request.form["gymaddress"]
@@ -124,6 +126,8 @@ def modify_gym(id):
 
 @app.route("/save_changes", methods=["POST"])
 def save_changes():
+    if users.get_token() != request.form["token"]:
+        return render_template("error.html", message="Invalid session token")
     gym_id = request.form["id"]
     name = request.form["gymname"]
     address = request.form["gymaddress"]
@@ -149,12 +153,17 @@ def search_gyms():
     list = gyms.search(name, address, price1, price2, sort)
     return render_template("search.html", gyms=list, count=len(list))
 
-@app.route("/subscribe/<int:id>", methods=["POST"])
+@app.route("/join_gym/<int:id>")
 def join_gym(id):
-    user_id = users.user_id()
+    info = gyms.get_info(id)
+    return render_template("subscribe.html", id=id, gym=info)
+
+@app.route("/subscribe", methods=["POST"])
+def subscribe():
     if users.get_token() != request.form["token"]:
         return render_template("error.html", message="Invalid session token")
-    if users.join_gym(id, user_id):
+    gym_id = request.form["gym_id"]
+    if users.join_gym(gym_id):
         return redirect("/")
     else:
         return render_template("error.html", message="FAILED")

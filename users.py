@@ -18,6 +18,18 @@ def login(username, password):
         else:
             return False
 
+def check_user(username, password):
+    sql = "SELECT id, password, admin FROM users WHERE username=:username"
+    result = db.session.execute(sql, {"username":username})
+    user = result.fetchone()
+    if not user:
+        return False
+    else:
+        if check_password_hash(user.password, password):
+            return True
+        else:
+            return False
+    
 def register(username, password):
     hash_value = generate_password_hash(password)
     admin = False
@@ -55,7 +67,7 @@ def username_taken(username):
         return False
 
 def get_list():
-    sql = "SELECT * FROM users"
+    sql = "SELECT * FROM users LEFT JOIN subscriptions ON users.id=subscriptions.user_id LEFT JOIN gyms ON gyms.id=subscriptions.gym_id"
     result = db.session.execute(sql)
     return result.fetchall()
 
@@ -68,13 +80,14 @@ def delete_user(id):
     except:
         return False
 
-def join_gym(gym_id, user_id):
-    sql = "SELECT * FROM subscriptions WHERE user_id=:user_id AND gym_id=:gym_id"
-    result = db.session.execute(sql, {"user_id":user_id, "gym_id":gym_id})
+def join_gym(gym_id):
+    userid = user_id()
+    sql = "SELECT * FROM subscriptions WHERE user_id=:user_id"
+    result = db.session.execute(sql, {"user_id":userid})
     user = result.fetchall()
-    if len(user) != 0:
+    if len(user) == 0:
         sql = "INSERT INTO subscriptions (user_id, gym_id, joined_at) VALUES (:user_id, :gym_id, NOW())"
-        db.session.execute(sql, {"user_id":user_id, "gym_id":gym_id})
+        db.session.execute(sql, {"user_id":userid, "gym_id":gym_id})
         db.session.commit()
         return True
     else:

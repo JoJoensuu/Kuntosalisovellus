@@ -35,6 +35,9 @@
                     <i>Admin rights:</i> {{ user.admin }}
                 </div>
                 <div class="review">
+                    <i>Subscriptions:</i> {{ user.name }} | Member since {{ user.joined_at }}
+                </div>
+                <div class="review">
                     <a href="/remove_user/{{ user.id }}">Delete user</a>
                 </div>
                 {% endfor %}
