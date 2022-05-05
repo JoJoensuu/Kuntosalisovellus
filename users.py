@@ -1,4 +1,4 @@
-
+import secrets
 from db import db
 from flask import session
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -13,6 +13,7 @@ def login(username, password):
         if check_password_hash(user.password, password):
             session["user_id"] = user.id
             session["admin"] = user.admin
+            session["csrf_token"] = secrets.token_hex(16)
             return True
         else:
             return False
@@ -33,6 +34,10 @@ def register(username, password):
 def logout():
     del session["user_id"]
     del session["admin"]
+    del session["csrf_token"]
+
+def get_token():
+    return session.get("csrf_token",0)
 
 def user_id():
     return session.get("user_id",0)
@@ -57,7 +62,7 @@ def get_list():
 def delete_user(id):
     try:
         sql = "DELETE FROM users WHERE id=:id"
-        result = db.session.execute(sql, {"id":id})
+        db.session.execute(sql, {"id":id})
         db.session.commit()
         return True
     except:

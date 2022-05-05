@@ -55,6 +55,8 @@ def new_review(id):
 
 @app.route("/submit_review", methods=["POST"])
 def submit_review():
+    if users.get_token() != request.form["token"]:
+        return render_template("error.html", message="Invalid session token")
     gym_id = request.form["id"]
     if "content" in request.form:
         stars = request.form["stars"]

@@ -25,8 +25,9 @@
                 <textarea name="content" rows="3" cols="50"></textarea><br>
                 <input type="submit" value="Submit review">
                 <input type="hidden" name="id" value="{{ id }}">
+                <input type="hidden" name="token" value="{{ session.csrf_token }}">
             </form>
-            <a href="/">Return without submitting</a>
+            <a href="/gotosearch">Return without submitting</a>
             {% endif %}
         </div>
     </body>

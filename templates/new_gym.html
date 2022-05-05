@@ -43,6 +43,7 @@
                 </div>
                 <div class="inputRow" style="margin-top: 50px;">
                     <input type="submit" value="Add gym">
+                    <input type="hidden" name="token" value="{{ session.csrf_token }}">
                 </div>
             </form>
             <br>

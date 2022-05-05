@@ -12,12 +12,13 @@
     </head>
     <body>
         <div align="center" style="margin-top: 50px;">
-            <form action="/login" method="post">
+            <form action="/login" method="POST">
                 Username: <input type="text" name="username">
                 <p>
                 Password: <input type="password" name="password">
                 <p>
                 <input type="submit" value="Login">
+                <input type="hidden" name="token" value="{{ session.csrf_token }}">
                 </form>
                 New user? Create new account <a href="/register">here</a>
         </div>
