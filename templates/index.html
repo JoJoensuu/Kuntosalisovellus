@@ -1,55 +1,62 @@
-<!DOCTYPE html>
-<title>Gym app</title>
-<table width="100%" style="background-color: white;">
+{% extends "layout.html" %}
+{% block title %}Index{% endblock %}
+{% block content %}
+<h2>Index page</h2>
+{% if session.admin %}
+<table align="center" style="border-spacing: 10px;">
     <tr>
-        <td align="center" width="600" style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: #000000; padding: 10px;">
-            {% if session.admin %}
-            <table width="600" style="background-color: #c2c2c2;">
-                <tr>
-                    <td style="border: 1px #000000 solid;">
-                        [ADMIN] <a href="/new_gym">Add new gym</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="border: 1px #000000 solid;">
-                        [ADMIN] <a href="/show_users">Show users</a><br>
-                    </td>
-                </tr>
-            </table>
-            {% endif %}
-            {% if session.user_id %}
-            <table align="center" width="600" style="background-color: #df6060;">
-                <tr>
-                    <td align="center">
-                        <b>Number of gyms listed: {{ count }}</b>
-                    </td>
-                </tr>
-                <tr>
-                    {% for gym in gyms %}
-                    <td align="center" style="padding: 20px;">
-                        <a href="/gym_info/{{ gym.id }}" style="padding: 20px 0;">{{ gym.name }}</a><br>
-                    </td>
-                    {% endfor %}
-                </tr>
-                <tr>
-                    <td align="center">
-                        You are signed in.
-                    </td>
-                </tr>
-                <tr>
-                    <td align="center">
-                        <a href="/logout">Logout</a>
-                    </td>
-                </tr>
-                {% else %}
-                <tr>
-                    <td align="center">
-                        <a href="/login">Login</a>
-
-                    </td>
-                </tr>
-            </table>
-            {% endif %}
+        <td>
+            <h3>Admin functions</h3>
+        </td>
+    </tr>
+    <tr>
+        <td align="center" style="border: 1px solid black; border-radius: 5px; padding: 5px 0;">
+            <a href="/new_gym" style="text-decoration: none;">Add new gym</a>
+        </td>
+    </tr>
+    <tr>
+        <td align="center" style="border: 1px solid black; border-radius: 5px; padding: 5px 0;">
+            <a href="/show_users" style="text-decoration: none;">Show users</a>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <h3>Normal user functions</h3>
         </td>
     </tr>
 </table>
+{% endif %}
+{% if session.user_id %}
+<table align="center" style="border-spacing: 10px;">
+    <tr>
+        <td>
+            Nymber of gyms in database: {{ count }}
+        </td>
+    </tr>
+    {% for gym in gyms %}
+    <tr>
+        <td align="center" style="border: 1px solid black; border-radius: 5px; padding: 5px 0;">
+            <a href="/gym_info/{{ gym.id }}" style="padding: 20px 0;">{{ gym.name }}</a>
+        </td>
+    </tr>
+    {% endfor %}
+    <tr>
+        <td>
+            You are signed in.
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <a href="/logout">Logout</a>
+        </td>
+    </tr>
+    {% else %}
+    <tr>
+        <td>
+            <a href="/login">Login</a>
+        </td>
+    </tr>
+</table>
+<br>
+{% endif %}
+{% endblock %}

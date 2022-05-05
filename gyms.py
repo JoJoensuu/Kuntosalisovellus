@@ -33,7 +33,7 @@ def submit(name, address, fee, description, type_id):
 def delete_gym(id):
     try:
         sql = "UPDATE gyms SET visible=FALSE WHERE id=:id"
-        result = db.session.execute(sql, {"id":id})
+        db.session.execute(sql, {"id":id})
         db.session.commit()
         return True
     except:
