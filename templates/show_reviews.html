@@ -1,15 +1,47 @@
-{% if session.user_id %}
-Number of reviews: {{ count }}
-<hr>
-{% for review in reviews %}
-<i>Stars:</i> {{ review.stars }}<br>
-<i>Comment:</i> {{ review.comment }}<br>
-{% if session.admin %}
-<a href="/remove_review/{{ review.id }}">Delete review</a><br>
-{% endif %}
-<hr>
-{% endfor %}
-<a href="/">Return</a>
-{% else %}
-Error: not logged in.
-{% endif %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            body {
+                background-color: rgb(219, 219, 219);
+                color: black;
+                font-size: 14px;
+            }
+
+            .largeTable {
+                margin: 50px auto;
+                width: 800px;
+            }
+
+            .review {
+                margin: 10px 0;
+            }
+        </style>
+        <title>Joni's Gym app</title>
+    </head>
+    <body>
+        <div align="center" style="margin-top: 50px;">
+            {% if session.user_id %}
+            <div class="largeTable">
+                Number of reviews: {{ count }}
+                {% for review in reviews %}
+                <div class="review">
+                    <i>Stars:</i> {{ review.stars }}
+                </div>
+                <div class="review">
+                    <i>Comment:</i> {{ review.comment }}
+                </div>
+                {% if session.admin %}
+                <div class="review">
+                    <a href="/remove_review/{{ review.id }}">Delete review</a>
+                </div>
+                {% endif %}
+                {% endfor %}
+                <div class="review">
+                    <a href="/">Return</a>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </body>
+</html>

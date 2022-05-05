@@ -5,32 +5,38 @@
             body {
                 background-color: rgb(219, 219, 219);
                 color: black;
+                font-size: 14px;
             }
 
             .large-table {
                 margin-left: auto;
                 margin-right: auto;
-                border: 1px solid black;
                 width: 800px
             }
 
             .search-table {
-                display: block;
+                display: table;
                 width: 800px;
+            }
+
+            .search {
+                display: table-row;
                 border: 1px solid black;
             }
 
             .results-table {
                 display: block;
                 width: 800px;
-                border: 1px solid black;
                 margin-top: 50px;
+                margin-bottom: 50px;
             }
 
             .result {
                 display: table;
-                width: 800px;
-                border: 1px solid black;
+                width: 300px;
+                height: 20px;
+                padding: 10px 0;
+                margin-bottom: 5px;
             }
         </style>
         <title>Joni's Gym app</title>
@@ -38,16 +44,26 @@
     <body>
         {% if session.user_id %}
         <div align="center" class="large-table">
+            <h1>Search gyms</h1>
             <div class="search-table">
-                <form action="/search" method="GET">
-                    <h3>Search gyms</h3><br>
-                    Search by gym name:<br>
-                    <input type="text" name="query">
-                    <br>
-                    <input type="submit" value="Get search results">
-                </form>
+                <div class="search">
+                    <form action="/search" method="GET">
+                        Search by gym name:<br>
+                        <input type="text" name="name">
+                        <br>
+                        Search by address:<br>
+                        <input type="text" name="address">
+                        <br>
+                        Search by price:<br>
+                        <input style="display: table-cell;" type="text" name="price1" size="1" maxlength="4" placeholder="min">
+                        <input style="display: table-cell;" type="text" name="price2" size="1" maxlength="4" placeholder="max">
+                        <br>
+                        <input type="submit" value="Get search results">
+                    </form>
+                </div>
             </div>
             <div class="results-table" align="center">
+                Number of results: {{ count }}<br>
                 {% for gym in gyms %}
                 <div class="result">
                     <div style="display: table-row;">

@@ -4,9 +4,7 @@ import users, gyms, reviews
 
 @app.route("/")
 def index():
-    list = gyms.get_list()
-    sum = gyms.get_sum()
-    return render_template("index.html", count=sum[0], gyms=list)
+    return render_template("index.html")
 
 @app.route("/show_users")
 def show_users():
@@ -53,7 +51,7 @@ def logout():
 
 @app.route("/new_review/<int:id>")
 def new_review(id):
-    return render_template("new.html", id=id)
+    return render_template("new_review.html", id=id)
 
 @app.route("/submit_review", methods=["POST"])
 def submit_review():
@@ -82,6 +80,8 @@ def add_gym():
         name = request.form["gymname"]
         address = request.form["gymaddress"]
         fee = request.form["gymfee"]
+        if not int(fee) or int(fee) < 0 or int(fee) > 9999:
+            return render_template("error.html", message="Fee has to be a value between 1 and 9999")
         description = request.form["gymdescription"]
         gym_type = request.form["gymtype"]
         if gyms.submit(name, address, fee, description, gym_type):
@@ -139,6 +139,9 @@ def gotosearch():
 
 @app.route("/search", methods=["GET"])
 def search_gyms():
-    query = request.args["query"]
-    list = gyms.search(query)
-    return render_template("search.html", gyms=list)
+    name = request.args["name"]
+    address = request.args["address"]
+    price1 = request.args["price1"]
+    price2 = request.args["price2"]
+    list = gyms.search(name, address, price1, price2)
+    return render_template("search.html", gyms=list, count=len(list))

@@ -1,18 +1,53 @@
-{% if session.admin %}
+<!DOCTYPE html>
 <html>
-    <form action="/add_gym" method="POST">
-        Name:<textarea name="gymname" rows="1" cols="30"></textarea><br>
-        Address:<textarea name="gymaddress" rows="1" cols="30"></textarea><br>
-        Fee:<textarea name="gymfee" rows="1" cols="10"></textarea><br>
-        Description:<textarea name="gymdescription" rows="3" cols="50"></textarea><br>
-        Type:<input type="radio" name="gymtype" value="1">Bodybuilding gym
-        <input type="radio" name="gymtype" value="2">Weightlifting gym
-        <input type="radio" name="gymtype" value="3">Crossfit
-        <input type="radio" name="gymtype" value="4">Powerlifting
-        <br><br>
-        <input type="submit" value="Add gym">
-    </form>
-    <br>
-    <a href="/">Return without submitting</a>
+    <head>
+        <style>
+            body {
+                background-color: rgb(219, 219, 219);
+                color: black;
+                font-size: 14px;
+            }
+
+            .inputRow {
+                margin: 10px 0;
+            }
+        </style>
+        <title>Joni's Gym app</title>
+    </head>
+    <body>
+        {% if session.admin %}
+        <div align="center" style="margin-top: 50px;">
+            <form action="/add_gym" method="POST">
+                <div class="inputRow">
+                    Name:<br>
+                    <input type="text" name="gymname" size="30" maxlength="30">
+                </div>
+                <div class="inputRow">
+                    Address:<br>
+                    <input type="text" name="gymaddress" size="30" maxlength="50">
+                </div>
+                <div class="inputRow">
+                    Fee:<br>
+                    <input name="gymfee" size="4" maxlength="4">
+                </div>
+                <div class="inputRow">
+                    Description:<br>
+                    <textarea type="text" name="gymdescription" rows="3" cols="50"></textarea>
+                </div>
+                <div class="inputRow">
+                    Type:<br>
+                    <input type="radio" name="gymtype" value="1">Bodybuilding gym
+                    <input type="radio" name="gymtype" value="2">Weightlifting gym
+                    <input type="radio" name="gymtype" value="3">Crossfit gym
+                    <input type="radio" name="gymtype" value="4">Powerlifting gym
+                </div>
+                <div class="inputRow" style="margin-top: 50px;">
+                    <input type="submit" value="Add gym">
+                </div>
+            </form>
+            <br>
+            <a href="/">Return without submitting</a>
+        </div>
+        {% endif %}
+    </body>
 </html>
-{% endif %}

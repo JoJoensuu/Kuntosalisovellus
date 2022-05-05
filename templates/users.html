@@ -1,14 +1,48 @@
-{% if session.admin %}
-Number of users: {{ count }}
-<hr>
-{% for user in users %}
-<i>Id:</i> {{ user.id }}<br>
-<i>Username:</i> {{ user.username }}<br>
-<i>Admin rights:</i> {{ user.admin }}<br>
-<a href="/remove_user/{{ user.id }}">Delete user</a><br>
-<hr>
-{% endfor %}
-<a href="/">Return</a>
-{% else %}
-Error: no admin Rights
-{% endif %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            body {
+                background-color: rgb(219, 219, 219);
+                color: black;
+                font-size: 14px;
+            }
+
+            .largeTable {
+                margin: 50px auto;
+                width: 800px;
+            }
+
+            .review {
+                margin: 10px 0;
+            }
+        </style>
+        <title>Joni's Gym app</title>
+    </head>
+    <body>
+        <div align="center" style="margin-top: 50px;">
+            {% if session.admin %}
+            <div class="largeTable">
+                Number of users: {{ count }}
+                {% for user in users %}
+                <div class="review">
+                    <i>Id:</i> {{ user.id }}
+                </div>
+                <div class="review">
+                    <i>Username:</i> {{ user.username }}
+                </div>
+                <div class="review">
+                    <i>Admin rights:</i> {{ user.admin }}
+                </div>
+                <div class="review">
+                    <a href="/remove_user/{{ user.id }}">Delete user</a>
+                </div>
+                <div class="review">
+                    <a href="/">Return</a>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+    </body>
+</html>

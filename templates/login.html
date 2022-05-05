@@ -1,8 +1,26 @@
-<form action="/login" method="post">
-    Username: <input type="text" name="username">
-    <p>
-    Password: <input type="password" name="password">
-    <p>
-    <input type="submit" value="Kirjaudu">
-    </form>
-    New user? Create new account <a href="/register">here</a>
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            body {
+                background-color: rgb(219, 219, 219);
+                color: black;
+                font-size: 14px;
+            }
+        </style>
+        <title>Joni's Gym app</title>
+    </head>
+    <body>
+        <div align="center" style="margin-top: 50px;">
+            <form action="/login" method="post">
+                Username: <input type="text" name="username">
+                <p>
+                Password: <input type="password" name="password">
+                <p>
+                <input type="submit" value="Login">
+                </form>
+                New user? Create new account <a href="/register">here</a>
+        </div>
+    </body>
+</html>
+

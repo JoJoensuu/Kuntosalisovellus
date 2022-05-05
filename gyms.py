@@ -1,16 +1,6 @@
 from db import db
 import users
 
-def get_list():
-    sql = "SELECT * FROM gyms WHERE visible=TRUE or visible IS NULL"
-    result = db.session.execute(sql)
-    return result.fetchall()
-
-def get_sum():
-    sql = "SELECT COUNT(*) FROM gyms WHERE visible=TRUE or visible IS NULL"
-    result = db.session.execute(sql)
-    return result.fetchone()
-
 def get_reviews(id):
     sql = "SELECT * FROM reviews WHERE gym_id=:id"
     result = db.session.execute(sql, {"id":id})
@@ -56,7 +46,11 @@ def alter(id, name, address, fee, description, gym_type):
     except:
         return False
 
-def search(query):
-    sql = "SELECT id, name FROM gyms WHERE name LIKE :query"
-    result = db.session.execute(sql, {"query":"%"+query+"%"})
+def search(name, address, price1, price2):
+    if price1 == "":
+        price1 = "0"
+    if price2 == "":
+        price2 = "9999"
+    sql = "SELECT id, name FROM gyms WHERE visible=TRUE or visible IS NULL AND name LIKE :name AND address LIKE :address AND fee BETWEEN :price1 AND :price2"
+    result = db.session.execute(sql, {"name":"%"+name+"%", "address":"%"+address+"%", "price1":price1, "price2":price2})
     return result.fetchall()

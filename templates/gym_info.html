@@ -1,18 +1,62 @@
-{% if session.user_id %}
-<hr>
-<i>Gym name:</i> {{ gym[0] }}<br>
-<i>Address:</i> {{ gym[1] }}<br>
-<i>Monthly price:</i> {{ gym[2] }}<br>
-<i>Description:</i> {{ gym[3] }}<br>
-<i>Gym type:</i> {{ gym[4] }}<br>
-<a href="/new_review/{{ gym[5] }}">Write a review</a><br>
-<a href="/show_reviews/{{ gym[5] }}">Show reviews of {{ gym[0] }}</a><br>
-{% if session.admin %}
-<a href="/modify_gym/{{ gym[5] }}">Modify {{ gym[0] }}</a><br>
-<a href="/delete_gym/{{ gym[5] }}">Delete {{ gym[0] }}</a><br>
-{% endif %}
-<hr>
-<a href="/gotosearch">Return</a>
-{% else %}
-Error: not logged in.
-{% endif %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            body {
+                background-color: rgb(219, 219, 219);
+                color: black;
+                font-size: 14px;
+            }
+
+            .mainTable {
+                width: 800px;
+                margin-top: 30px;
+            }
+
+            .gymInfo {
+                width: 800px;
+                margin: 10px 0;
+            }
+        </style>
+        <title>Joni's Gym app</title>
+    </head>
+    <body>
+        <div align="center">
+            {% if session.user_id %}
+            <div class="mainTable">
+                <h1>Gym info</h1>
+                <div class="gymInfo">
+                    Name: {{ gym[0 ]}}
+                </div>
+                <div class="gymInfo">
+                    Address: {{ gym[1] }}
+                </div>
+                <div class="gymInfo">
+                    Monthly price: {{ gym[2] }}
+                </div>
+                <div class="gymInfo">
+                    Description: {{ gym[3] }}
+                </div>
+                <div class="gymInfo">
+                    Gym type: {{ gym[4] }}
+                </div>
+                <div class="gymInfo">
+                    <a href="/new_review/{{ gym[5] }}">Write a review</a>
+                </div>
+                <div class="gymInfo">
+                    <a href="/show_reviews/{{ gym[5] }}">Show reviews of {{ gym[0] }}</a>
+                </div>
+                {% if session.admin %}
+                <div class="gymInfo">
+                    <a href="/modify_gym/{{ gym[5] }}">Modify {{ gym[0] }}</a>
+                </div>
+                <div class="gymInfo">
+                    <a href="/delete_gym/{{ gym[5] }}">Delete {{ gym[0] }}</a>
+                </div>
+                {% endif %}
+            </div>
+            <a href="/gotosearch">Return</a>
+            {% endif %}
+        </div>
+    </body>
+</html>

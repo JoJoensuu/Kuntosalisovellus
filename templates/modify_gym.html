@@ -1,20 +1,57 @@
-{% if session.admin %}
+<!DOCTYPE html>
 <html>
-    <form action="/save_changes" method="POST">
-        ID:{{ gym[5] }}<br>
-        Name:<textarea name="gymname" rows="1" cols="30">{{ gym[0] }}</textarea><br>
-        Address:<textarea name="gymaddress" rows="1" cols="30">{{ gym[1] }}</textarea><br>
-        Fee:<textarea name="gymfee" rows="1" cols="10">{{ gym[2] }}</textarea><br>
-        Description:<textarea name="gymdescription" rows="3" cols="50">{{ gym[3] }}</textarea><br>
-        Type:<input type="radio" name="gymtype" value="1">Bodybuilding gym
-        <input type="radio" name="gymtype" value="2">Weightlifting gym
-        <input type="radio" name="gymtype" value="3">Crossfit gym
-        <input type="radio" name="gymtype" value="4">Powerlifting gym
-        <br><br>
-        <input type="submit" value="Save changes">
-        <input type="hidden" name="id" value="{{ id }}">
-    </form>
-    <br>
-    <a href="/gym_info/{{ gym[5] }}">Return without submitting</a>
+    <head>
+        <style>
+            body {
+                background-color: rgb(219, 219, 219);
+                color: black;
+                font-size: 14px;
+            }
+
+            .inputRow {
+                margin: 10px 0;
+            }
+        </style>
+        <title>Joni's Gym app</title>
+    </head>
+    <body>
+        {% if session.admin %}
+        <div align="center" style="margin-top: 50px;">
+            <form action="/save_changes" method="POST">
+                <div class="inputRow">
+                    Gym ID:{{ gym[5] }}
+                </div>
+                <div class="inputRow">
+                    Name:<br>
+                    <input type="text" name="gymname" size="30" maxlength="30" value="{{ gym[0] }}">
+                </div>
+                <div class="inputRow">
+                    Address:<br>
+                    <input type="text" name="gymaddress" size="30" maxlength="50" value="{{ gym[1] }}">
+                </div>
+                <div class="inputRow">
+                    Fee:<br>
+                    <input name="gymfee" size="4" maxlength="4" value="{{ gym[2] }}">
+                </div>
+                <div class="inputRow">
+                    Description:<br>
+                    <textarea type="text" name="gymdescription" rows="3" cols="50">{{ gym[3] }}</textarea>
+                </div>
+                <div class="inputRow">
+                    Type:<br>
+                    <input type="radio" name="gymtype" value="1">Bodybuilding gym
+                    <input type="radio" name="gymtype" value="2">Weightlifting gym
+                    <input type="radio" name="gymtype" value="3">Crossfit gym
+                    <input type="radio" name="gymtype" value="4">Powerlifting gym
+                </div>
+                <div class="inputRow" style="margin-top: 50px;">
+                    <input type="submit" value="Save changes">
+                    <input type="hidden" name="id" value="{{ id }}">
+                </div>
+            </form>
+            <br>
+            <a href="/gym_info/{{ gym[5] }}">Return without submitting</a>
+        </div>
+        {% endif %}
+    </body>
 </html>
-{% endif %}
