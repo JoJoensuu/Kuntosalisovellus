@@ -46,11 +46,15 @@ def alter(id, name, address, fee, description, gym_type):
     except:
         return False
 
-def search(name, address, price1, price2):
+def search(name, address, price1, price2, sort):
     if price1 == "":
         price1 = "0"
     if price2 == "":
         price2 = "9999"
-    sql = "SELECT id, name FROM gyms WHERE visible=TRUE or visible IS NULL AND name LIKE :name AND address LIKE :address AND fee BETWEEN :price1 AND :price2"
+    sql = "SELECT id, name, fee FROM gyms WHERE visible=TRUE or visible IS NULL AND name LIKE :name AND address LIKE :address AND fee BETWEEN :price1 AND :price2"
+    if sort == "1":
+        sql += " ORDER BY fee"
+    else:
+        sql += " ORDER BY name"
     result = db.session.execute(sql, {"name":"%"+name+"%", "address":"%"+address+"%", "price1":price1, "price2":price2})
     return result.fetchall()

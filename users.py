@@ -67,3 +67,15 @@ def delete_user(id):
         return True
     except:
         return False
+
+def join_gym(gym_id, user_id):
+    sql = "SELECT * FROM subscriptions WHERE user_id=:user_id AND gym_id=:gym_id"
+    result = db.session.execute(sql, {"user_id":user_id, "gym_id":gym_id})
+    user = result.fetchall()
+    if len(user) != 0:
+        sql = "INSERT INTO subscriptions (user_id, gym_id, joined_at) VALUES (:user_id, :gym_id, NOW())"
+        db.session.execute(sql, {"user_id":user_id, "gym_id":gym_id})
+        db.session.commit()
+        return True
+    else:
+        return False

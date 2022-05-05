@@ -145,5 +145,16 @@ def search_gyms():
     address = request.args["address"]
     price1 = request.args["price1"]
     price2 = request.args["price2"]
-    list = gyms.search(name, address, price1, price2)
+    sort = request.args["sort"]
+    list = gyms.search(name, address, price1, price2, sort)
     return render_template("search.html", gyms=list, count=len(list))
+
+@app.route("/subscribe/<int:id>", methods=["POST"])
+def join_gym(id):
+    user_id = users.user_id()
+    if users.get_token() != request.form["token"]:
+        return render_template("error.html", message="Invalid session token")
+    if users.join_gym(id, user_id):
+        return redirect("/")
+    else:
+        return render_template("error.html", message="FAILED")

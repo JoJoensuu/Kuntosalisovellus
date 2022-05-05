@@ -25,6 +25,12 @@ CREATE TABLE gym_types (
 	id SERIAL PRIMARY KEY,
 	name TEXT,
 );
+CREATE TABLE subscriptions (
+	id SERIAL PRIMARY KEY,
+	user_id INTEGER REFERENCES users ON DELETE CASCADE,
+	gym_id INTEGER REFERENCES gyms ON DELETE CASCADE,
+	joined_at TIMESTAMP
+)
 INSERT INTO gym_types (
 	name)
 	VALUES (

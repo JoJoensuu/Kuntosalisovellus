@@ -41,10 +41,13 @@
                     Gym type: {{ gym[4] }}
                 </div>
                 <div class="gymInfo">
-                    <a href="/new_review/{{ gym[5] }}">Write a review</a>
+                    <a href="/new_review/{{ gym[5] }}">Write a review of {{ gym[0] }}</a>
                 </div>
                 <div class="gymInfo">
                     <a href="/show_reviews/{{ gym[5] }}">Show reviews of {{ gym[0] }}</a>
+                </div>
+                <div class="gymInfo">
+                    <a href="/subscribe/{{ gym[5] }}">Join {{ gym[0] }}</a>
                 </div>
                 {% if session.admin %}
                 <div class="gymInfo">
