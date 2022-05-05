@@ -55,3 +55,8 @@ def alter(id, name, address, fee, description, gym_type):
         return True
     except:
         return False
+
+def search(query):
+    sql = "SELECT id, name FROM gyms WHERE name LIKE :query"
+    result = db.session.execute(sql, {"query":"%"+query+"%"})
+    return result.fetchall()

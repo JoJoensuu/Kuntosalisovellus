@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            body {
+                background-color: rgb(219, 219, 219);
+                color: black;
+            }
+
+            .large-table {
+                margin-left: auto;
+                margin-right: auto;
+                border: 1px solid black;
+                width: 800px
+            }
+
+            .search-table {
+                display: block;
+                width: 800px;
+                border: 1px solid black;
+            }
+
+            .results-table {
+                display: block;
+                width: 800px;
+                border: 1px solid black;
+                margin-top: 50px;
+            }
+
+            .result {
+                display: table;
+                width: 800px;
+                border: 1px solid black;
+            }
+        </style>
+        <title>Joni's Gym app</title>
+    </head>
+    <body>
+        {% if session.user_id %}
+        <div align="center" class="large-table">
+            <div class="search-table">
+                <form action="/search" method="GET">
+                    <h3>Search gyms</h3><br>
+                    Search by gym name:<br>
+                    <input type="text" name="query">
+                    <br>
+                    <input type="submit" value="Get search results">
+                </form>
+            </div>
+            <div class="results-table" align="center">
+                {% for gym in gyms %}
+                <div class="result">
+                    <div style="display: table-row;">
+                        <div style="display: table-cell;">
+                            <a href="/gym_info/{{ gym.id }}">{{ gym.name }}</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div>
+                <a href="/">Return to index</a>
+            </div>
+        </div>
+        {% endif %}
+    </body>
+</html>

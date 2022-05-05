@@ -132,3 +132,13 @@ def save_changes():
         return redirect("/")
     else:
         return render_template("error.html", message="Modifying gym info failed")
+
+@app.route("/gotosearch")
+def gotosearch():
+    return render_template("search.html")
+
+@app.route("/search", methods=["GET"])
+def search_gyms():
+    query = request.args["query"]
+    list = gyms.search(query)
+    return render_template("search.html", gyms=list)
