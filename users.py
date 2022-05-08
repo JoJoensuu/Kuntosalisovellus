@@ -5,7 +5,8 @@ from flask import session
 from werkzeug.security import check_password_hash, generate_password_hash
 
 def login(username, password):
-    sql = "SELECT user_id, password, admin FROM users WHERE username=:username"
+    sql = """SELECT user_id, password, admin
+            FROM users WHERE username=:username"""
     result = db.session.execute(sql, {"username":username})
     user = result.fetchone()
     if not user:
@@ -20,7 +21,8 @@ def login(username, password):
             return False
 
 def check_user(username, password):
-    sql = "SELECT user_id, password, admin FROM users WHERE username=:username"
+    sql = """SELECT user_id, password, admin
+            FROM users WHERE username=:username"""
     result = db.session.execute(sql, {"username":username})
     user = result.fetchone()
     if not user:
@@ -37,8 +39,12 @@ def register(username, password):
     if username == "admin":
         admin = True
     try:
-        sql = "INSERT INTO users (username,password,admin) VALUES (:username,:password,:admin)"
-        db.session.execute(sql, {"username":username, "password":hash_value, "admin":admin})
+        sql = """INSERT INTO users (username,password,admin)
+                VALUES (:username,:password,:admin)"""
+        db.session.execute(sql, {
+                "username":username, "password":hash_value,
+                "admin":admin
+                })
         db.session.commit()
     except:
         return False
@@ -70,7 +76,10 @@ def username_taken(username):
 def get_list(x):
     if user_id == 0:
         return False
-    sql = "SELECT A.user_id, A.username, A.admin, C.name, B.joined_at FROM users as A LEFT JOIN subscriptions as B ON A.user_id=B.user_id LEFT JOIN gyms as C ON C.gym_id=B.gym_id"
+    sql = """SELECT A.user_id, A.username, A.admin, C.name,
+            B.joined_at FROM users as A LEFT JOIN
+            subscriptions as B ON A.user_id=B.user_id
+            LEFT JOIN gyms as C ON C.gym_id=B.gym_id"""
     if x == 1:
         result = db.session.execute(sql)
         return result.fetchall()
@@ -94,7 +103,8 @@ def join_gym(gym_id):
     result = db.session.execute(sql, {"user_id":userid})
     user = result.fetchall()
     if len(user) == 0:
-        sql = "INSERT INTO subscriptions (user_id, gym_id, joined_at) VALUES (:user_id, :gym_id, NOW())"
+        sql = """INSERT INTO subscriptions (user_id, gym_id,
+                joined_at) VALUES (:user_id, :gym_id, NOW())"""
         db.session.execute(sql, {"user_id":userid, "gym_id":gym_id})
         db.session.commit()
         return True
@@ -115,7 +125,10 @@ def change_password(pw1, pw2):
     if not check_user(username, pw1):
         return False
     hash_value = generate_password_hash(pw2)
-    sql = "UPDATE users SET password=:hash_value WHERE user_id=:user_id"
-    db.session.execute(sql, {"hash_value":hash_value, "user_id":user_id()})
+    sql = """UPDATE users SET password=:hash_value
+            WHERE user_id=:user_id"""
+    db.session.execute(sql, {"hash_value":hash_value,
+            "user_id":user_id()
+            })
     db.session.commit()
     return True
