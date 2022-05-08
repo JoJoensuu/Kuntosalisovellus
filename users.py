@@ -1,12 +1,11 @@
 import secrets
-
 from sqlalchemy import true
 from db import db
 from flask import session
 from werkzeug.security import check_password_hash, generate_password_hash
 
 def login(username, password):
-    sql = "SELECT id, password, admin FROM users WHERE username=:username"
+    sql = "SELECT user_id, password, admin FROM users WHERE username=:username"
     result = db.session.execute(sql, {"username":username})
     user = result.fetchone()
     if not user:
@@ -68,10 +67,17 @@ def username_taken(username):
     else:
         return False
 
-def get_list():
-    sql = "SELECT * FROM users LEFT JOIN subscriptions ON users.user_id=subscriptions.user_id LEFT JOIN gyms ON gyms.gym_id=subscriptions.gym_id"
-    result = db.session.execute(sql)
-    return result.fetchall()
+def get_list(x):
+    if user_id == 0:
+        return False
+    sql = "SELECT A.user_id, A.username, A.admin, C.name, B.joined_at FROM users as A LEFT JOIN subscriptions as B ON A.user_id=B.user_id LEFT JOIN gyms as C ON C.gym_id=B.gym_id"
+    if x == 1:
+        result = db.session.execute(sql)
+        return result.fetchall()
+    else:
+        sql += " WHERE A.user_id=:user_id"
+        result = db.session.execute(sql, {"user_id":user_id()})
+        return result.fetchone()
 
 def delete_user(id):
     try:
@@ -100,13 +106,6 @@ def leave_gym(user_id):
     db.session.execute(sql, {"user_id":user_id})
     db.session.commit()
     return
-
-def get_info():
-    if user_id() == 0:
-        return False
-    sql = "SELECT * FROM users LEFT JOIN subscriptions ON users.user_id=subscriptions.user_id LEFT JOIN gyms ON gyms.gym_id=subscriptions.gym_id WHERE users.user_id=:user_id"
-    result = db.session.execute(sql, {"user_id":user_id()})
-    return result.fetchone()
 
 def change_password(pw1, pw2):
     sql = "SELECT username FROM users WHERE user_id=:user_id"

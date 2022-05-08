@@ -35,7 +35,11 @@
                     <i>Admin rights:</i> {{ user.admin }}
                 </div>
                 <div class="review">
+                    {% if user.name %}
                     <i>Subscriptions:</i> {{ user.name }} | Member since {{ user.joined_at }}
+                    {% else %}
+                    <i>Not a member of any gym</i>
+                    {% endif %}
                 </div>
                 <div class="review">
                     <a href="/remove_user/{{ user.user_id }}">Delete user</a>

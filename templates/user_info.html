@@ -24,11 +24,12 @@
             {% if session.user_id %}
             <div class="largeTable">
                 <div class="review">
-                    <i>Id:</i> {{ user.id }}
+                    <i>Id:</i> {{ user.user_id }}
                 </div>
                 <div class="review">
                     <i>Username:</i> {{ user.username }}
                 </div>
+                {% if user.name %}
                 <div class="review">
                     <i>Subscriptions:</i> {{ user.name }} | Member since {{ user.joined_at }}
                 </div>
@@ -38,6 +39,11 @@
                         <input type="hidden" name="token" value="{{ session.csrf_token }}">
                     </form>
                 </div>
+                {% else %}
+                <div class="review">
+                    <i>Not a member of any gym</i>
+                </div>
+                {% endif %}
                 <div class="review">
                     <a href="/password">Change password</a>
                 </div>

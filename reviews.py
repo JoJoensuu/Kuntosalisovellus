@@ -1,6 +1,5 @@
 from db import db
 import users
-from flask import session
 
 def submit(id, stars, content):
     user_id = users.user_id()
@@ -19,13 +18,13 @@ def submit(id, stars, content):
 def delete_review(id):
     try:
         sql = "DELETE FROM reviews WHERE review_id=:id"
-        result = db.session.execute(sql, {"id":id})
+        db.session.execute(sql, {"id":id})
         db.session.commit()
         return True
     except:
         return False
 
 def get_sum(id):
-    sql = "SELECT COUNT(reviews) FROM reviews LEFT JOIN gyms ON reviews.gym_id=gyms.id WHERE reviews.gym_id=:id"
+    sql = "SELECT COUNT(reviews) FROM reviews LEFT JOIN gyms ON reviews.gym_id=gyms.gym_id WHERE reviews.gym_id=:id"
     result = db.session.execute(sql, {"id":id})
     return result.fetchone()

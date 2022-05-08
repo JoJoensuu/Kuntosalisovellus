@@ -2,14 +2,10 @@ from app import app
 from flask import render_template, request, redirect
 import users, gyms, reviews
 
+# MAIN PAGE, LOGIN, LOGOUT AND REGISTERING A NEW USER
 @app.route("/")
 def index():
     return render_template("index.html")
-
-@app.route("/show_users")
-def show_users():
-    list = users.get_list()
-    return render_template("users.html", count=len(list), users=list)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -22,6 +18,11 @@ def login():
             return redirect("/")
         else:
             return render_template("error.html", message="Wrong username or password")
+
+@app.route("/logout")
+def logout():
+    users.logout()
+    return redirect("/")
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -44,33 +45,12 @@ def register():
         else:
             return render_template("error.html", message="Failed to register user")
 
-@app.route("/logout")
-def logout():
-    users.logout()
-    return redirect("/")
+# ADMIN FUNCTIONALITIES
 
-@app.route("/new_review/<int:id>")
-def new_review(id):
-    return render_template("new_review.html", id=id)
-
-@app.route("/submit_review", methods=["POST"])
-def submit_review():
-    if users.get_token() != request.form["token"]:
-        return render_template("error.html", message="Invalid session token")
-    gym_id = request.form["id"]
-    if "content" in request.form:
-        stars = request.form["stars"]
-        content = request.form["content"]
-        if reviews.submit(gym_id, stars, content):
-            return redirect("/")
-        else:
-            return render_template("error.html", message="Submitting the review failed")
-
-@app.route("/show_reviews/<int:id>")
-def show_reviews(id):
-    list = gyms.get_reviews(id)
-    sum = reviews.get_sum(id)
-    return render_template("show_reviews.html", count=sum[0], reviews=list)
+@app.route("/show_users")
+def show_users():
+    list = users.get_list(1)
+    return render_template("users.html", count=len(list), users=list)
 
 @app.route("/new_gym")
 def new_gym():
@@ -93,6 +73,26 @@ def add_gym():
         else:
             return render_template("error.html", message="Submitting new gym failed")
 
+@app.route("/modify_gym/<int:id>")
+def modify_gym(id):
+    info = gyms.get_info(id)
+    return render_template("modify_gym.html", id=id, gym=info)
+
+@app.route("/save_changes", methods=["POST"])
+def save_changes():
+    if users.get_token() != request.form["token"]:
+        return render_template("error.html", message="Invalid session token")
+    gym_id = request.form["id"]
+    name = request.form["gymname"]
+    address = request.form["gymaddress"]
+    fee = request.form["gymfee"]
+    description = request.form["gymdescription"]
+    gym_type = request.form["gymtype"]
+    if gyms.alter(gym_id, name, address, fee, description, gym_type):
+        return redirect("/")
+    else:
+        return render_template("error.html", message="Modifying gym info failed")
+
 @app.route("/delete_gym/<int:id>")
 def delete_gym(id):
     if gyms.delete_gym(id):
@@ -114,71 +114,7 @@ def remove_review(id):
     else:
         return render_template("error.html", message="Review deletion failed")
 
-@app.route("/gym_info/<int:id>")
-def gym_info(id):
-    info = gyms.get_info(id)
-    return render_template("gym_info.html", gym=info)
-
-@app.route("/modify_gym/<int:id>")
-def modify_gym(id):
-    info = gyms.get_info(id)
-    return render_template("modify_gym.html", id=id, gym=info)
-
-@app.route("/save_changes", methods=["POST"])
-def save_changes():
-    if users.get_token() != request.form["token"]:
-        return render_template("error.html", message="Invalid session token")
-    gym_id = request.form["id"]
-    name = request.form["gymname"]
-    address = request.form["gymaddress"]
-    fee = request.form["gymfee"]
-    description = request.form["gymdescription"]
-    gym_type = request.form["gymtype"]
-    if gyms.alter(gym_id, name, address, fee, description, gym_type):
-        return redirect("/")
-    else:
-        return render_template("error.html", message="Modifying gym info failed")
-
-@app.route("/gotosearch")
-def gotosearch():
-    return render_template("search.html")
-
-@app.route("/search", methods=["GET"])
-def search_gyms():
-    name = request.args["name"]
-    address = request.args["address"]
-    price1 = request.args["price1"]
-    price2 = request.args["price2"]
-    sort = request.args["sort"]
-    list = gyms.search(name, address, price1, price2, sort)
-    return render_template("search.html", gyms=list, count=len(list))
-
-@app.route("/join_gym/<int:id>")
-def join_gym(id):
-    info = gyms.get_info(id)
-    return render_template("subscribe.html", id=id, gym=info)
-
-@app.route("/subscribe", methods=["POST"])
-def subscribe():
-    if users.get_token() != request.form["token"]:
-        return render_template("error.html", message="Invalid session token")
-    gym_id = request.form["gym_id"]
-    if users.join_gym(gym_id):
-        return redirect("/")
-    else:
-        return render_template("error.html", message="FAILED")
-
-@app.route("/user_info")
-def user_info():
-    info = users.get_info()
-    return render_template("user_info.html", user=info)
-
-@app.route("/cancel_subscription/<int:id>", methods=["POST"])
-def unsubscribe(id):
-    if users.get_token() != request.form["token"]:
-        return render_template("error.html", message="Invalid session token")
-    users.leave_gym(id)
-    return redirect("/")
+# NORMAL USER FUNCTIONALITIES
 
 @app.route("/password")
 def password():
@@ -203,3 +139,72 @@ def change_password():
         return redirect("/")
     else:
         return render_template("error.html", message="Failed to change password")
+
+@app.route("/user_info")
+def user_info():
+    info = users.get_list(2)
+    return render_template("user_info.html", user=info)
+
+@app.route("/gotosearch")
+def gotosearch():
+    return render_template("search.html")
+
+@app.route("/search", methods=["GET"])
+def search_gyms():
+    name = request.args["name"]
+    address = request.args["address"]
+    price1 = request.args["price1"]
+    price2 = request.args["price2"]
+    sort = request.args["sort"]
+    list = gyms.search(name, address, price1, price2, sort)
+    return render_template("search.html", gyms=list, count=len(list))
+
+@app.route("/gym_info/<int:id>")
+def gym_info(id):
+    info = gyms.get_info(id)
+    return render_template("gym_info.html", gym=info)
+
+@app.route("/new_review/<int:id>")
+def new_review(id):
+    return render_template("new_review.html", id=id)
+
+@app.route("/submit_review", methods=["POST"])
+def submit_review():
+    if users.get_token() != request.form["token"]:
+        return render_template("error.html", message="Invalid session token")
+    gym_id = request.form["id"]
+    if "content" in request.form:
+        stars = request.form["stars"]
+        content = request.form["content"]
+        if reviews.submit(gym_id, stars, content):
+            return redirect("/gotosearch")
+        else:
+            return render_template("error.html", message="Submitting the review failed")
+
+@app.route("/show_reviews/<int:id>")
+def show_reviews(id):
+    list = gyms.get_reviews(id)
+    sum = reviews.get_sum(id)
+    return render_template("show_reviews.html", count=sum[0], reviews=list)
+
+@app.route("/join_gym/<int:id>")
+def join_gym(id):
+    info = gyms.get_info(id)
+    return render_template("subscribe.html", id=id, gym=info)
+
+@app.route("/subscribe", methods=["POST"])
+def subscribe():
+    if users.get_token() != request.form["token"]:
+        return render_template("error.html", message="Invalid session token")
+    gym_id = request.form["gym_id"]
+    if users.join_gym(gym_id):
+        return redirect("/")
+    else:
+        return render_template("error.html", message="FAILED")
+
+@app.route("/cancel_subscription/<int:id>", methods=["POST"])
+def unsubscribe(id):
+    if users.get_token() != request.form["token"]:
+        return render_template("error.html", message="Invalid session token")
+    users.leave_gym(id)
+    return redirect("/")
