@@ -179,3 +179,27 @@ def unsubscribe(id):
         return render_template("error.html", message="Invalid session token")
     users.leave_gym(id)
     return redirect("/")
+
+@app.route("/password")
+def password():
+    return render_template("change_password.html")
+
+@app.route("/change_password", methods=["POST"])
+def change_password():
+    if users.get_token() != request.form["token"]:
+        return render_template("error.html", message="Invalid session token")
+    password1 = request.form["password1"]
+    password2 = request.form["password2"]
+    password3 = request.form["password3"]
+    if not password1:
+        return render_template("error.html", message="All the fields must be filled")
+    if not password2:
+        return render_template("error.html", message="All the fields must be filled")
+    if password2 != password3:
+        return render_template("error.html", message="Passwords don't match")
+    if password1 == password2:
+        return render_template("error.html", message="New password cannot be same as old password")
+    if users.change_password(password1, password2):
+        return redirect("/")
+    else:
+        return render_template("error.html", message="Failed to change password")

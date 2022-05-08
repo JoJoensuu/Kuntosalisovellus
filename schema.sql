@@ -1,5 +1,5 @@
 CREATE TABLE gyms (
-	id SERIAL PRIMARY KEY,
+	gym_id SERIAL PRIMARY KEY,
 	name TEXT,
 	address TEXT,
 	fee INTEGER,
@@ -8,13 +8,13 @@ CREATE TABLE gyms (
 	type_id INTEGER REFERENCES gym_types
 );
 CREATE TABLE users (
-	id SERIAL PRIMARY KEY,
+	user_id SERIAL PRIMARY KEY,
 	username TEXT,
 	password TEXT,
 	admin BOOLEAN
 );
 CREATE TABLE reviews (
-	id SERIAL PRIMARY KEY,
+	review_id SERIAL PRIMARY KEY,
 	posted_at TIMESTAMP,
 	user_id INTEGER REFERENCES users ON DELETE CASCADE,
 	gym_id INTEGER REFERENCES gyms,
@@ -22,11 +22,11 @@ CREATE TABLE reviews (
 	comment TEXT
 );
 CREATE TABLE gym_types (
-	id SERIAL PRIMARY KEY,
+	type_id SERIAL PRIMARY KEY,
 	name TEXT,
 );
 CREATE TABLE subscriptions (
-	id SERIAL PRIMARY KEY,
+	sub_id SERIAL PRIMARY KEY,
 	user_id INTEGER REFERENCES users ON DELETE CASCADE,
 	gym_id INTEGER REFERENCES gyms ON DELETE CASCADE,
 	joined_at TIMESTAMP

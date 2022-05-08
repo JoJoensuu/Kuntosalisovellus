@@ -18,7 +18,7 @@ def submit(id, stars, content):
 
 def delete_review(id):
     try:
-        sql = "DELETE FROM reviews WHERE id=:id"
+        sql = "DELETE FROM reviews WHERE review_id=:id"
         result = db.session.execute(sql, {"id":id})
         db.session.commit()
         return True

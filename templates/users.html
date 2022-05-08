@@ -26,7 +26,7 @@
                 Number of users: {{ count }}
                 {% for user in users %}
                 <div class="review">
-                    <i>Id:</i> {{ user.id }}
+                    <i>Id:</i> {{ user.user_id }}
                 </div>
                 <div class="review">
                     <i>Username:</i> {{ user.username }}
@@ -38,7 +38,7 @@
                     <i>Subscriptions:</i> {{ user.name }} | Member since {{ user.joined_at }}
                 </div>
                 <div class="review">
-                    <a href="/remove_user/{{ user.id }}">Delete user</a>
+                    <a href="/remove_user/{{ user.user_id }}">Delete user</a>
                 </div>
                 {% endfor %}
                 <div class="review">

@@ -13,7 +13,7 @@ def login(username, password):
         return False
     else:
         if check_password_hash(user.password, password):
-            session["user_id"] = user.id
+            session["user_id"] = user.user_id
             session["admin"] = user.admin
             session["csrf_token"] = secrets.token_hex(16)
             return True
@@ -21,7 +21,7 @@ def login(username, password):
             return False
 
 def check_user(username, password):
-    sql = "SELECT id, password, admin FROM users WHERE username=:username"
+    sql = "SELECT user_id, password, admin FROM users WHERE username=:username"
     result = db.session.execute(sql, {"username":username})
     user = result.fetchone()
     if not user:
@@ -69,13 +69,13 @@ def username_taken(username):
         return False
 
 def get_list():
-    sql = "SELECT * FROM users LEFT JOIN subscriptions ON users.id=subscriptions.user_id LEFT JOIN gyms ON gyms.id=subscriptions.gym_id"
+    sql = "SELECT * FROM users LEFT JOIN subscriptions ON users.user_id=subscriptions.user_id LEFT JOIN gyms ON gyms.gym_id=subscriptions.gym_id"
     result = db.session.execute(sql)
     return result.fetchall()
 
 def delete_user(id):
     try:
-        sql = "DELETE FROM users WHERE id=:id"
+        sql = "DELETE FROM users WHERE user_id=:id"
         db.session.execute(sql, {"id":id})
         db.session.commit()
         return True
@@ -104,6 +104,19 @@ def leave_gym(user_id):
 def get_info():
     if user_id() == 0:
         return False
-    sql = "SELECT * FROM users LEFT JOIN subscriptions ON users.id=subscriptions.user_id LEFT JOIN gyms ON gyms.id=subscriptions.gym_id WHERE users.id=:user_id"
+    sql = "SELECT * FROM users LEFT JOIN subscriptions ON users.user_id=subscriptions.user_id LEFT JOIN gyms ON gyms.gym_id=subscriptions.gym_id WHERE users.user_id=:user_id"
     result = db.session.execute(sql, {"user_id":user_id()})
     return result.fetchone()
+
+def change_password(pw1, pw2):
+    sql = "SELECT username FROM users WHERE user_id=:user_id"
+    result = db.session.execute(sql, {"user_id":user_id()})
+    user = result.fetchone()
+    username = user[0]
+    if not check_user(username, pw1):
+        return False
+    hash_value = generate_password_hash(pw2)
+    sql = "UPDATE users SET password=:hash_value WHERE user_id=:user_id"
+    db.session.execute(sql, {"hash_value":hash_value, "user_id":user_id()})
+    db.session.commit()
+    return True

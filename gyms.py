@@ -22,7 +22,7 @@ def submit(name, address, fee, description, type_id):
 
 def delete_gym(id):
     try:
-        sql = "UPDATE gyms SET visible=FALSE WHERE id=:id"
+        sql = "UPDATE gyms SET visible=FALSE WHERE gym_id=:id"
         db.session.execute(sql, {"id":id})
         db.session.commit()
         return True
@@ -30,7 +30,7 @@ def delete_gym(id):
         return False
 
 def get_info(id):
-    sql = "SELECT gyms.name, gyms.address, gyms.fee, gyms.description, gym_types.name, gyms.id FROM gyms LEFT JOIN gym_types ON gyms.type_id=gym_types.id WHERE gyms.id=:id"
+    sql = "SELECT gyms.name, gyms.address, gyms.fee, gyms.description, gym_types.name, gyms.gym_id FROM gyms LEFT JOIN gym_types ON gyms.type_id=gym_types.type_id WHERE gyms.gym_id=:id"
     result = db.session.execute(sql, {"id":id})
     return result.fetchone()
 
@@ -39,7 +39,7 @@ def alter(id, name, address, fee, description, gym_type):
     if not admin:
         return False
     try:
-        sql = "UPDATE gyms SET name=:name, address=:address, fee=:fee, description=:description, type_id=:gym_type WHERE id=:id"
+        sql = "UPDATE gyms SET name=:name, address=:address, fee=:fee, description=:description, type_id=:gym_type WHERE gym_id=:id"
         db.session.execute(sql, {"name":name, "address":address, "fee":fee, "description":description, "gym_type":gym_type, "id":id})
         db.session.commit()
         return True
@@ -51,7 +51,7 @@ def search(name, address, price1, price2, sort):
         price1 = "0"
     if price2 == "":
         price2 = "9999"
-    sql = "SELECT id, name, fee FROM gyms WHERE visible=TRUE or visible IS NULL AND name LIKE :name AND address LIKE :address AND fee BETWEEN :price1 AND :price2"
+    sql = "SELECT gym_id, name, fee FROM gyms WHERE visible=TRUE or visible IS NULL AND name LIKE :name AND address LIKE :address AND fee BETWEEN :price1 AND :price2"
     if sort == "1":
         sql += " ORDER BY fee"
     else:
