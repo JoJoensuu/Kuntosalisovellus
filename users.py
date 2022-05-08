@@ -65,7 +65,7 @@ def admin():
     return session.get("admin")
 
 def username_taken(username):
-    sql = "SELECT * FROM users WHERE username=:username"
+    sql = "SELECT username FROM users WHERE username=:username"
     result = db.session.execute(sql, {"username":username})
     user = result.fetchall()
     if len(user) != 0:
@@ -99,7 +99,7 @@ def delete_user(id):
 
 def join_gym(gym_id):
     userid = user_id()
-    sql = "SELECT * FROM subscriptions WHERE user_id=:user_id"
+    sql = "SELECT sub_id FROM subscriptions WHERE user_id=:user_id"
     result = db.session.execute(sql, {"user_id":userid})
     user = result.fetchall()
     if len(user) == 0:

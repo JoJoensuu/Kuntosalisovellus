@@ -5,7 +5,7 @@ def submit(id, stars, content):
     user_id = users.user_id()
     if user_id == 0:
         return False
-    sql = """SELECT * FROM reviews
+    sql = """SELECT review_id FROM reviews
             WHERE user_id=:userid
             AND gym_id=:id"""
     result = db.session.execute(sql, {
