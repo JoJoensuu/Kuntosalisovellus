@@ -167,3 +167,15 @@ def subscribe():
         return redirect("/")
     else:
         return render_template("error.html", message="FAILED")
+
+@app.route("/user_info")
+def user_info():
+    info = users.get_info()
+    return render_template("user_info.html", user=info)
+
+@app.route("/cancel_subscription/<int:id>", methods=["POST"])
+def unsubscribe(id):
+    if users.get_token() != request.form["token"]:
+        return render_template("error.html", message="Invalid session token")
+    users.leave_gym(id)
+    return redirect("/")

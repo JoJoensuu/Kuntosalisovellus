@@ -1,4 +1,6 @@
 import secrets
+
+from sqlalchemy import true
 from db import db
 from flask import session
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -92,3 +94,16 @@ def join_gym(gym_id):
         return True
     else:
         return False
+
+def leave_gym(user_id):
+    sql = "DELETE FROM subscriptions WHERE user_id=:user_id"
+    db.session.execute(sql, {"user_id":user_id})
+    db.session.commit()
+    return
+
+def get_info():
+    if user_id() == 0:
+        return False
+    sql = "SELECT * FROM users LEFT JOIN subscriptions ON users.id=subscriptions.user_id LEFT JOIN gyms ON gyms.id=subscriptions.gym_id WHERE users.id=:user_id"
+    result = db.session.execute(sql, {"user_id":user_id()})
+    return result.fetchone()

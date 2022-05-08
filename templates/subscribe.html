@@ -12,14 +12,16 @@
     </head>
     <body>
         <div align="center" style="margin-top: 50px;">
+            {% if session.user_id %}
             <form action="/subscribe" method="POST">
                 Are you sure you want to join {{ gym[0] }}?<br>
                 <br>
                 <input type="submit" value="Subscribe">
                 <input type="hidden" name="token" value="{{ session.csrf_token }}">
                 <input type="hidden" name="gym_id" value="{{ id }}">
-                </form>
-                <a href="/">Cancel</a>
+            </form>
+            {% endif %}
+            <a href="/">Cancel</a>
         </div>
     </body>
 </html>
