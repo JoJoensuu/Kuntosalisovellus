@@ -51,34 +51,3 @@ INSERT INTO gym_types (
 	VALUES (
 	'crossfit gym'
 );
-INSERT INTO gyms (
-	name,
-	address,
-	fee,
-	description,
-	visible
-	type_id)
-	VALUES (
-	'Superstar Gym',
-	'Superstar Street',
-	80,
-	'We will make you into a superstar!',
-	True,
-	1
-);
-
-INSERT INTO gyms (
-	name,
-	address,
-	fee,
-	description,
-	visible
-	type_id)
-	VALUES (
-	'Average Gym',
-	'Average Street',
-	20,
-	'For the Average Joe',
-	True,
-	1
-);
